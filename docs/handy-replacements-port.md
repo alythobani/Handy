@@ -38,7 +38,7 @@ This is a selective port, not a branch merge. Current Handy is hundreds of commi
 - [x] Remove obsolete frontend updater implementation (`d8e0043`)
 - [x] Remove obsolete backend updater implementation (`e184999`)
 - [x] Add replacement settings types, defaults, persistence commands, and generated bindings
-- [ ] Add a focused replacement engine with ordered literal and regex replacement tests
+- [x] Add a focused replacement engine with ordered literal and regex replacement tests
 - [ ] Add punctuation/space trimming and next-character capitalization tests
 - [ ] Add date, time, casing, spacing, and command transformations
 - [ ] Integrate replacements into the shared transcription cleanup pipeline before optional LLM processing

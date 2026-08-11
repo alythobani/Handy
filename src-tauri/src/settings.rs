@@ -7,6 +7,8 @@ use std::fmt;
 use tauri::AppHandle;
 use tauri_plugin_store::StoreExt;
 
+pub use crate::replacements::Replacement;
+
 pub const APPLE_INTELLIGENCE_PROVIDER_ID: &str = "apple_intelligence";
 pub const APPLE_INTELLIGENCE_DEFAULT_MODEL_ID: &str = "Apple Intelligence";
 
@@ -180,35 +182,6 @@ pub enum RecordingRetentionPeriod {
     Days3,
     Weeks2,
     Months3,
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Type, Default)]
-#[serde(rename_all = "snake_case")]
-pub enum CapitalizationRule {
-    #[default]
-    None,
-    ForceUppercase,
-    ForceLowercase,
-}
-
-#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Type)]
-pub struct Replacement {
-    pub search: String,
-    pub replace: String,
-    #[serde(default)]
-    pub is_regex: bool,
-    #[serde(default)]
-    pub trim_punctuation_before: bool,
-    #[serde(default)]
-    pub trim_punctuation_after: bool,
-    #[serde(default)]
-    pub trim_spaces_before: bool,
-    #[serde(default)]
-    pub trim_spaces_after: bool,
-    #[serde(default)]
-    pub capitalization_rule: CapitalizationRule,
-    #[serde(default = "default_replacement_enabled")]
-    pub enabled: bool,
 }
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Type)]
@@ -519,10 +492,6 @@ fn default_settings_schema_version() -> u32 {
 }
 
 fn default_push_to_talk() -> bool {
-    true
-}
-
-fn default_replacement_enabled() -> bool {
     true
 }
 
@@ -1172,6 +1141,7 @@ pub fn get_recording_retention_period(app: &AppHandle) -> RecordingRetentionPeri
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::replacements::CapitalizationRule;
 
     fn default_settings_json() -> serde_json::Value {
         serde_json::to_value(get_default_settings()).unwrap()
