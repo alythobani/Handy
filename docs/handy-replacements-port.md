@@ -40,7 +40,7 @@ This is a selective port, not a branch merge. Current Handy is hundreds of commi
 - [x] Add replacement settings types, defaults, persistence commands, and generated bindings
 - [x] Add a focused replacement engine with ordered literal and regex replacement tests
 - [x] Add punctuation/space trimming and next-character capitalization tests
-- [ ] Add date, time, casing, spacing, and command transformations
+- [x] Add date, time, casing, spacing, and command transformations
 - [ ] Integrate replacements into the shared transcription cleanup pipeline before optional LLM processing
 - [ ] Add the Replacements settings section and core rule CRUD controls
 - [ ] Add filtering, duplicate indicators, enable/disable, and drag ordering
