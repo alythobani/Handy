@@ -1,34 +1,51 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Check, X } from "lucide-react";
+import { commands, type Replacement } from "@/bindings";
 import { Button } from "../../ui/Button";
 import { Input } from "../../ui/Input";
+import { AdvancedReplacementOptions } from "./AdvancedReplacementOptions";
+import { MagicTagInput } from "./MagicTagInput";
+import {
+  completeReplacement,
+  type CompleteReplacement,
+} from "./replacementDefaults";
 
 interface ReplacementEditorProps {
-  initialSearch: string;
-  initialReplace: string;
+  initialReplacement: Replacement;
   isEditing: boolean;
   disabled: boolean;
-  onSave: (search: string, replace: string) => void;
+  onSave: (replacement: CompleteReplacement) => void;
   onCancel: () => void;
 }
 
 export const ReplacementEditor: React.FC<ReplacementEditorProps> = ({
-  initialSearch,
-  initialReplace,
+  initialReplacement,
   isEditing,
   disabled,
   onSave,
   onCancel,
 }) => {
   const { t } = useTranslation();
-  const [search, setSearch] = useState(initialSearch);
-  const [replace, setReplace] = useState(initialReplace);
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [replacement, setReplacement] = useState(() =>
+    completeReplacement(initialReplacement),
+  );
+  const [regexError, setRegexError] = useState<string | null>(null);
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (search.length > 0 && !disabled) {
-      onSave(search, replace);
+    if (replacement.search.length === 0 || disabled) {
+      return;
     }
+    if (replacement.is_regex) {
+      const validationResult = await commands.validateReplacementRegex(
+        replacement.search,
+      );
+      if (validationResult.status === "error") {
+        setRegexError(validationResult.error);
+        return;
+      }
+    }
+    onSave(replacement);
   };
   const handleKeyDown = (event: React.KeyboardEvent<HTMLFormElement>) => {
     if (event.key === "Escape") {
@@ -56,21 +73,38 @@ export const ReplacementEditor: React.FC<ReplacementEditorProps> = ({
           </span>
           <Input
             className="w-full"
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
+            value={replacement.search}
+            onChange={(event) => {
+              setReplacement({ ...replacement, search: event.target.value });
+              setRegexError(null);
+            }}
             placeholder={t("settings.replacements.editor.searchPlaceholder")}
             disabled={disabled}
             autoFocus
+            aria-invalid={regexError !== null}
+            aria-describedby={
+              regexError ? "replacement-regex-error" : undefined
+            }
           />
+          {regexError && (
+            <span
+              id="replacement-regex-error"
+              role="alert"
+              className="block text-xs text-red-400"
+            >
+              {t("settings.replacements.editor.regexError", {
+                error: regexError,
+              })}
+            </span>
+          )}
         </label>
         <label className="space-y-1">
           <span className="block text-xs font-medium text-mid-gray">
             {t("settings.replacements.editor.replaceLabel")}
           </span>
-          <Input
-            className="w-full"
-            value={replace}
-            onChange={(event) => setReplace(event.target.value)}
+          <MagicTagInput
+            value={replacement.replace}
+            onChange={(replace) => setReplacement({ ...replacement, replace })}
             placeholder={t("settings.replacements.editor.replacePlaceholder")}
             disabled={disabled}
           />
@@ -79,6 +113,14 @@ export const ReplacementEditor: React.FC<ReplacementEditorProps> = ({
       <p className="text-xs text-mid-gray">
         {t("settings.replacements.editor.emptyReplacementHint")}
       </p>
+      <AdvancedReplacementOptions
+        replacement={replacement}
+        disabled={disabled}
+        onChange={(updatedReplacement) => {
+          setReplacement(updatedReplacement);
+          setRegexError(null);
+        }}
+      />
       <div className="flex justify-end gap-2">
         <Button
           type="button"
@@ -95,7 +137,7 @@ export const ReplacementEditor: React.FC<ReplacementEditorProps> = ({
           type="submit"
           variant="primary"
           size="sm"
-          disabled={search.length === 0 || disabled}
+          disabled={replacement.search.length === 0 || disabled}
           className="inline-flex items-center gap-1"
         >
           <Check className="w-3.5 h-3.5" aria-hidden="true" />

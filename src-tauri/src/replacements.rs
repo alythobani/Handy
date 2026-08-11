@@ -186,6 +186,9 @@ fn parse_run_transformation(text: &str) -> Option<(MagicTransformation, usize)> 
     }
     let command = &quoted_command[quote.len_utf8()..];
     let closing_quote_offset = command.find(quote)?;
+    if closing_quote_offset == 0 {
+        return None;
+    }
     let consumed_bytes = "[run]".len() + quote.len_utf8() + closing_quote_offset + quote.len_utf8();
     Some((
         MagicTransformation::Run(command[..closing_quote_offset].to_string()),
@@ -406,6 +409,10 @@ fn build_search_regex(replacement: &Replacement) -> Result<Regex, regex::Error> 
     }
 }
 
+pub fn validate_replacement_regex(pattern: &str) -> Result<(), regex::Error> {
+    Regex::new(pattern).map(|_| ())
+}
+
 fn build_literal_search_pattern(search: &str) -> String {
     let mut pattern = String::from("(?i)");
     for character in search.chars() {
@@ -543,6 +550,12 @@ mod tests {
             literal_replacement("cat", "dog"),
         ];
         assert_eq!(apply_replacements("cat", &replacements), "dog");
+    }
+
+    #[test]
+    fn regex_validation_uses_the_replacement_engine_syntax() {
+        assert!(validate_replacement_regex(r"(?i)hello\s+world").is_ok());
+        assert!(validate_replacement_regex("[").is_err());
     }
 
     #[test]
@@ -767,5 +780,18 @@ mod tests {
             apply_replacements_with_test_context("trigger", &replacements, &|_| true),
             "[run]\"unterminated [unknown]"
         );
+    }
+
+    #[test]
+    fn empty_run_commands_remain_literal_and_are_not_executed() {
+        let commands = RefCell::new(Vec::new());
+        let run_command = |command: &str| {
+            commands.borrow_mut().push(command.to_string());
+            true
+        };
+        let replacements = [literal_replacement("trigger", "[run]\"\"")];
+        let output = apply_replacements_with_test_context("trigger", &replacements, &run_command);
+        assert_eq!(output, "[run]\"\"");
+        assert!(commands.into_inner().is_empty());
     }
 }

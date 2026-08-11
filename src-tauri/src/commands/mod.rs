@@ -43,6 +43,12 @@ pub fn get_default_settings() -> Result<AppSettings, String> {
 
 #[tauri::command]
 #[specta::specta]
+pub fn validate_replacement_regex(pattern: String) -> Result<(), String> {
+    crate::replacements::validate_replacement_regex(&pattern).map_err(|error| error.to_string())
+}
+
+#[tauri::command]
+#[specta::specta]
 pub fn get_log_dir_path(app: AppHandle) -> Result<String, String> {
     let log_dir = crate::portable::app_log_dir(&app)
         .map_err(|e| format!("Failed to get log directory: {}", e))?;

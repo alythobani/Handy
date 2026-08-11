@@ -57,6 +57,18 @@ export const ReplacementRow: React.FC<ReplacementRowProps> = ({
 }) => {
   const { t } = useTranslation();
   const replacementIsEnabled = replacement.enabled ?? true;
+  const replacementUsesMagic =
+    /\[(?:date|time|lowercase|lowcase|uppercase|capitalize|nospace)\]|\[run\]["']/.test(
+      replacement.replace,
+    );
+  const replacementTrimsContext =
+    replacement.trim_punctuation_before ||
+    replacement.trim_punctuation_after ||
+    replacement.trim_spaces_before ||
+    replacement.trim_spaces_after;
+  const capitalizationIsConfigured =
+    replacement.capitalization_rule !== undefined &&
+    replacement.capitalization_rule !== "none";
   return (
     <div
       className={`flex items-center gap-2 px-4 py-3 transition-all ${
@@ -96,6 +108,26 @@ export const ReplacementRow: React.FC<ReplacementRowProps> = ({
         </code>
       </div>
       <div className="flex shrink-0 items-center gap-1">
+        {replacement.is_regex && (
+          <span className="rounded bg-blue-500/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-blue-400">
+            {t("settings.replacements.rule.regexBadge")}
+          </span>
+        )}
+        {replacementUsesMagic && (
+          <span className="rounded bg-purple-500/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-purple-400">
+            {t("settings.replacements.rule.magicBadge")}
+          </span>
+        )}
+        {replacementTrimsContext && (
+          <span className="rounded bg-cyan-500/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-cyan-400">
+            {t("settings.replacements.rule.trimmingBadge")}
+          </span>
+        )}
+        {capitalizationIsConfigured && (
+          <span className="rounded bg-emerald-500/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-emerald-400">
+            {t("settings.replacements.rule.capitalizationBadge")}
+          </span>
+        )}
         {!replacementIsEnabled && (
           <span className="rounded bg-red-500/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-red-400">
             {t("settings.replacements.rule.disabledBadge")}

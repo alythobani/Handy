@@ -8,23 +8,13 @@ import { SettingsGroup } from "../../ui/SettingsGroup";
 import { ToggleSwitch } from "../../ui/ToggleSwitch";
 import { ReplacementEditor } from "./ReplacementEditor";
 import { ReplacementList } from "./ReplacementList";
+import {
+  createEmptyReplacement,
+  type CompleteReplacement,
+} from "./replacementDefaults";
 
 interface ActiveEditor {
   index: number | null;
-}
-
-function createReplacement(search: string, replace: string): Replacement {
-  return {
-    search,
-    replace,
-    is_regex: false,
-    trim_punctuation_before: false,
-    trim_punctuation_after: false,
-    trim_spaces_before: false,
-    trim_spaces_after: false,
-    capitalization_rule: "none",
-    enabled: true,
-  };
 }
 
 export const ReplacementsSettings: React.FC = () => {
@@ -36,17 +26,15 @@ export const ReplacementsSettings: React.FC = () => {
   const replacementsAreUpdating = isUpdating("replacements");
   const editingReplacement =
     activeEditor?.index != null ? replacements[activeEditor.index] : undefined;
-  const handleSave = (search: string, replace: string) => {
+  const handleSave = (replacement: CompleteReplacement) => {
     if (activeEditor === null) {
       return;
     }
     const updatedReplacements =
       activeEditor.index === null
-        ? [...replacements, createReplacement(search, replace)]
-        : replacements.map((replacement, index) =>
-            index === activeEditor.index
-              ? { ...replacement, search, replace }
-              : replacement,
+        ? [...replacements, replacement]
+        : replacements.map((currentReplacement, index) =>
+            index === activeEditor.index ? replacement : currentReplacement,
           );
     void updateSetting("replacements", updatedReplacements);
     setActiveEditor(null);
@@ -151,8 +139,7 @@ export const ReplacementsSettings: React.FC = () => {
         {activeEditor !== null && (
           <ReplacementEditor
             key={activeEditor.index ?? "new"}
-            initialSearch={editingReplacement?.search ?? ""}
-            initialReplace={editingReplacement?.replace ?? ""}
+            initialReplacement={editingReplacement ?? createEmptyReplacement()}
             isEditing={activeEditor.index !== null}
             disabled={replacementsAreUpdating}
             onSave={handleSave}

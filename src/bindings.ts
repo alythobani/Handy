@@ -541,6 +541,14 @@ async getDefaultSettings() : Promise<Result<AppSettings, string>> {
     else return { status: "error", error: e  as any };
 }
 },
+async validateReplacementRegex(pattern: string) : Promise<Result<null, string>> {
+    try {
+    return { status: "ok", data: await TAURI_INVOKE("validate_replacement_regex", { pattern }) };
+} catch (e) {
+    if(e instanceof Error) throw e;
+    else return { status: "error", error: e  as any };
+}
+},
 async getLogDirPath() : Promise<Result<string, string>> {
     try {
     return { status: "ok", data: await TAURI_INVOKE("get_log_dir_path") };

@@ -44,7 +44,7 @@ This is a selective port, not a branch merge. Current Handy is hundreds of commi
 - [x] Integrate replacements into the shared transcription cleanup pipeline before optional LLM processing
 - [x] Add the Replacements settings section and core rule CRUD controls
 - [x] Add filtering, duplicate indicators, enable/disable, and drag ordering
-- [ ] Add magic-tag autocomplete and advanced-option controls
+- [x] Add magic-tag autocomplete and advanced-option controls
 - [ ] Add JSON import/export and imported-rule indicators
 - [ ] Add complete translations and accessibility behavior
 - [ ] Build the separate macOS app and perform end-to-end QA alongside official Handy

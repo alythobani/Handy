@@ -408,6 +408,19 @@
         "replaceLabel": "Replace with",
         "replacePlaceholder": "Replacement text",
         "emptyReplacementHint": "Leave the replacement empty to delete matching text.",
+        "advancedTitle": "Advanced Options",
+        "regexLabel": "Find with a Rust regular expression",
+        "regexError": "Invalid regular expression: {{error}}",
+        "trimPunctuationBefore": "Trim punctuation before the match",
+        "trimPunctuationAfter": "Trim punctuation after the match",
+        "trimSpacesBefore": "Trim spaces before the match",
+        "trimSpacesAfter": "Trim spaces after the match",
+        "capitalization": {
+          "label": "Next character",
+          "none": "Keep unchanged",
+          "uppercase": "Make uppercase",
+          "lowercase": "Make lowercase"
+        },
         "cancel": "Cancel",
         "add": "Add",
         "update": "Update"
@@ -416,6 +429,10 @@
         "emptyReplacement": "Delete match",
         "disabledBadge": "Disabled",
         "duplicateBadge": "Duplicate",
+        "regexBadge": "Regex",
+        "magicBadge": "Magic",
+        "trimmingBadge": "Trimming",
+        "capitalizationBadge": "Case",
         "enable": "Enable replacement for {{search}}",
         "disable": "Disable replacement for {{search}}",
         "edit": "Edit replacement for {{search}}",
@@ -423,6 +440,16 @@
         "delete": "Delete replacement for {{search}}",
         "moveUp": "Move replacement for {{search}} up",
         "moveDown": "Move replacement for {{search}} down"
+      },
+      "magic": {
+        "date": "Insert the current date.",
+        "time": "Insert the current time.",
+        "lowercase": "Lowercase the complete processed transcription.",
+        "lowcase": "Alias for lowercase.",
+        "uppercase": "Uppercase the complete processed transcription.",
+        "capitalize": "Capitalize every word in the complete processed transcription.",
+        "nospace": "Remove spaces from the complete processed transcription.",
+        "run": "Run a quoted shell command. Empty commands remain text."
       }
     },
     "postProcessing": {
