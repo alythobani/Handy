@@ -7,7 +7,7 @@ import { Button } from "../../ui/Button";
 import { SettingsGroup } from "../../ui/SettingsGroup";
 import { ToggleSwitch } from "../../ui/ToggleSwitch";
 import { ReplacementEditor } from "./ReplacementEditor";
-import { ReplacementRow } from "./ReplacementRow";
+import { ReplacementList } from "./ReplacementList";
 
 interface ActiveEditor {
   index: number | null;
@@ -35,9 +35,7 @@ export const ReplacementsSettings: React.FC = () => {
   const replacementsEnabled = getSetting("replacements_enabled") ?? true;
   const replacementsAreUpdating = isUpdating("replacements");
   const editingReplacement =
-    activeEditor?.index != null
-      ? replacements[activeEditor.index]
-      : undefined;
+    activeEditor?.index != null ? replacements[activeEditor.index] : undefined;
   const handleSave = (search: string, replace: string) => {
     if (activeEditor === null) {
       return;
@@ -64,6 +62,57 @@ export const ReplacementsSettings: React.FC = () => {
       }
       if (currentEditor?.index != null && currentEditor.index > deletedIndex) {
         return { index: currentEditor.index - 1 };
+      }
+      return currentEditor;
+    });
+  };
+  const handleToggle = (toggledIndex: number) => {
+    void updateSetting(
+      "replacements",
+      replacements.map((replacement, index) =>
+        index === toggledIndex
+          ? { ...replacement, enabled: !(replacement.enabled ?? true) }
+          : replacement,
+      ),
+    );
+  };
+  const handleDuplicate = (duplicatedIndex: number) => {
+    const updatedReplacements = [...replacements];
+    updatedReplacements.splice(duplicatedIndex + 1, 0, {
+      ...replacements[duplicatedIndex],
+    });
+    void updateSetting("replacements", updatedReplacements);
+    setActiveEditor((currentEditor) => {
+      if (
+        currentEditor?.index != null &&
+        currentEditor.index > duplicatedIndex
+      ) {
+        return { index: currentEditor.index + 1 };
+      }
+      return currentEditor;
+    });
+  };
+  const handleReorder = (sourceIndex: number, targetIndex: number) => {
+    if (sourceIndex === targetIndex) {
+      return;
+    }
+    const updatedReplacements = [...replacements];
+    const [movedReplacement] = updatedReplacements.splice(sourceIndex, 1);
+    updatedReplacements.splice(targetIndex, 0, movedReplacement);
+    void updateSetting("replacements", updatedReplacements);
+    setActiveEditor((currentEditor) => {
+      const editingIndex = currentEditor?.index;
+      if (editingIndex == null) {
+        return currentEditor;
+      }
+      if (editingIndex === sourceIndex) {
+        return { index: targetIndex };
+      }
+      if (sourceIndex < editingIndex && targetIndex >= editingIndex) {
+        return { index: editingIndex - 1 };
+      }
+      if (sourceIndex > editingIndex && targetIndex <= editingIndex) {
+        return { index: editingIndex + 1 };
       }
       return currentEditor;
     });
@@ -114,17 +163,17 @@ export const ReplacementsSettings: React.FC = () => {
           <p className="px-4 py-8 text-center text-sm text-mid-gray">
             {t("settings.replacements.emptyState")}
           </p>
-        ) : (
-          replacements.map((replacement, index) => (
-            <ReplacementRow
-              key={`${index}-${replacement.search}`}
-              replacement={replacement}
-              disabled={replacementsAreUpdating}
-              onEdit={() => setActiveEditor({ index })}
-              onDelete={() => handleDelete(index)}
-            />
-          ))
-        )}
+        ) : replacements.length > 0 ? (
+          <ReplacementList
+            replacements={replacements}
+            disabled={replacementsAreUpdating}
+            onEdit={(index) => setActiveEditor({ index })}
+            onDelete={handleDelete}
+            onToggle={handleToggle}
+            onDuplicate={handleDuplicate}
+            onReorder={handleReorder}
+          />
+        ) : null}
       </SettingsGroup>
     </div>
   );

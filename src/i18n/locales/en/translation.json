@@ -395,6 +395,11 @@
       "rulesDescription": "Rules run from top to bottom before optional AI post-processing.",
       "addNew": "Add Replacement",
       "emptyState": "No replacement rules yet.",
+      "filter": {
+        "placeholder": "Filter replacements",
+        "clear": "Clear replacement filter",
+        "noResults": "No replacement rules match this filter."
+      },
       "editor": {
         "addTitle": "New Replacement",
         "editTitle": "Edit Replacement",
@@ -409,8 +414,15 @@
       },
       "rule": {
         "emptyReplacement": "Delete match",
+        "disabledBadge": "Disabled",
+        "duplicateBadge": "Duplicate",
+        "enable": "Enable replacement for {{search}}",
+        "disable": "Disable replacement for {{search}}",
         "edit": "Edit replacement for {{search}}",
-        "delete": "Delete replacement for {{search}}"
+        "duplicate": "Duplicate replacement for {{search}}",
+        "delete": "Delete replacement for {{search}}",
+        "moveUp": "Move replacement for {{search}} up",
+        "moveDown": "Move replacement for {{search}} down"
       }
     },
     "postProcessing": {
