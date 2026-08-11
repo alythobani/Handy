@@ -182,6 +182,35 @@ pub enum RecordingRetentionPeriod {
     Months3,
 }
 
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Type, Default)]
+#[serde(rename_all = "snake_case")]
+pub enum CapitalizationRule {
+    #[default]
+    None,
+    ForceUppercase,
+    ForceLowercase,
+}
+
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Type)]
+pub struct Replacement {
+    pub search: String,
+    pub replace: String,
+    #[serde(default)]
+    pub is_regex: bool,
+    #[serde(default)]
+    pub trim_punctuation_before: bool,
+    #[serde(default)]
+    pub trim_punctuation_after: bool,
+    #[serde(default)]
+    pub trim_spaces_before: bool,
+    #[serde(default)]
+    pub trim_spaces_after: bool,
+    #[serde(default)]
+    pub capitalization_rule: CapitalizationRule,
+    #[serde(default = "default_replacement_enabled")]
+    pub enabled: bool,
+}
+
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Type)]
 #[serde(rename_all = "snake_case")]
 pub enum KeyboardImplementation {
@@ -396,6 +425,10 @@ pub struct AppSettings {
     #[serde(default)]
     pub custom_words: Vec<String>,
     #[serde(default)]
+    pub replacements: Vec<Replacement>,
+    #[serde(default = "default_replacements_enabled")]
+    pub replacements_enabled: bool,
+    #[serde(default)]
     pub model_unload_timeout: ModelUnloadTimeout,
     #[serde(default = "default_word_correction_threshold")]
     pub word_correction_threshold: f64,
@@ -486,6 +519,14 @@ fn default_settings_schema_version() -> u32 {
 }
 
 fn default_push_to_talk() -> bool {
+    true
+}
+
+fn default_replacement_enabled() -> bool {
+    true
+}
+
+fn default_replacements_enabled() -> bool {
     true
 }
 
@@ -869,6 +910,8 @@ pub fn get_default_settings() -> AppSettings {
         debug_mode: false,
         log_level: default_log_level(),
         custom_words: Vec::new(),
+        replacements: Vec::new(),
+        replacements_enabled: default_replacements_enabled(),
         model_unload_timeout: ModelUnloadTimeout::default(),
         word_correction_threshold: default_word_correction_threshold(),
         history_limit: default_history_limit(),
@@ -1143,8 +1186,26 @@ mod tests {
         assert!(settings.push_to_talk);
         assert!(!settings.audio_feedback);
         assert!(settings.filler_word_removal_enabled);
+        assert!(settings.replacements.is_empty());
+        assert!(settings.replacements_enabled);
         // Bindings default to empty; the load path merges the real defaults in.
         assert!(settings.bindings.is_empty());
+    }
+
+    #[test]
+    fn replacement_advanced_options_default_to_disabled() {
+        let replacement: Replacement = serde_json::from_value(serde_json::json!({
+            "search": "remove me",
+            "replace": ""
+        }))
+        .expect("a replacement only requires search and replace values");
+        assert!(replacement.enabled);
+        assert!(!replacement.is_regex);
+        assert!(!replacement.trim_punctuation_before);
+        assert!(!replacement.trim_punctuation_after);
+        assert!(!replacement.trim_spaces_before);
+        assert!(!replacement.trim_spaces_after);
+        assert_eq!(replacement.capitalization_rule, CapitalizationRule::None);
     }
 
     /// Frozen snapshot of a real v0.9.0-era settings store, as written to
