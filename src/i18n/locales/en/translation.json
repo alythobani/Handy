@@ -13,6 +13,7 @@
     "general": "General",
     "models": "Models",
     "advanced": "Advanced",
+    "replacements": "Replacements",
     "postProcessing": "Post Process",
     "history": "History",
     "debug": "Debug",
@@ -380,6 +381,36 @@
       "fillerWordRemoval": {
         "title": "Remove Filler Words",
         "description": "Removes common hesitation words from transcriptions. Turn off to keep them."
+      }
+    },
+    "replacements": {
+      "groups": {
+        "behavior": "Behavior",
+        "rules": "Replacement Rules"
+      },
+      "enable": {
+        "label": "Enable Replacements",
+        "description": "Apply deterministic replacement rules to every transcription."
+      },
+      "rulesDescription": "Rules run from top to bottom before optional AI post-processing.",
+      "addNew": "Add Replacement",
+      "emptyState": "No replacement rules yet.",
+      "editor": {
+        "addTitle": "New Replacement",
+        "editTitle": "Edit Replacement",
+        "searchLabel": "Find",
+        "searchPlaceholder": "Text to find",
+        "replaceLabel": "Replace with",
+        "replacePlaceholder": "Replacement text",
+        "emptyReplacementHint": "Leave the replacement empty to delete matching text.",
+        "cancel": "Cancel",
+        "add": "Add",
+        "update": "Update"
+      },
+      "rule": {
+        "emptyReplacement": "Delete match",
+        "edit": "Edit replacement for {{search}}",
+        "delete": "Delete replacement for {{search}}"
       }
     },
     "postProcessing": {

@@ -42,7 +42,7 @@ This is a selective port, not a branch merge. Current Handy is hundreds of commi
 - [x] Add punctuation/space trimming and next-character capitalization tests
 - [x] Add date, time, casing, spacing, and command transformations
 - [x] Integrate replacements into the shared transcription cleanup pipeline before optional LLM processing
-- [ ] Add the Replacements settings section and core rule CRUD controls
+- [x] Add the Replacements settings section and core rule CRUD controls
 - [ ] Add filtering, duplicate indicators, enable/disable, and drag ordering
 - [ ] Add magic-tag autocomplete and advanced-option controls
 - [ ] Add JSON import/export and imported-rule indicators
