@@ -8,6 +8,7 @@ import { ReplacementRow } from "./ReplacementRow";
 
 interface ReplacementListProps {
   replacements: Replacement[];
+  recentlyImportedIndices: ReadonlySet<number>;
   disabled: boolean;
   onEdit: (index: number) => void;
   onDelete: (index: number) => void;
@@ -22,6 +23,7 @@ function normalizedSearch(replacement: Replacement): string {
 
 export const ReplacementList: React.FC<ReplacementListProps> = ({
   replacements,
+  recentlyImportedIndices,
   disabled,
   onEdit,
   onDelete,
@@ -104,6 +106,7 @@ export const ReplacementList: React.FC<ReplacementListProps> = ({
             replacement={replacement}
             disabled={disabled}
             isDuplicate={duplicateSearches.has(normalizedSearch(replacement))}
+            isRecentlyImported={recentlyImportedIndices.has(index)}
             isDragging={draggingIndex === index}
             isDropTarget={dropTargetIndex === index && draggingIndex !== index}
             reorderingDisabled={reorderingDisabled}

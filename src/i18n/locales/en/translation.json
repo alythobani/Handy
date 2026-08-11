@@ -429,6 +429,7 @@
         "emptyReplacement": "Delete match",
         "disabledBadge": "Disabled",
         "duplicateBadge": "Duplicate",
+        "importedBadge": "Imported",
         "regexBadge": "Regex",
         "magicBadge": "Magic",
         "trimmingBadge": "Trimming",
@@ -440,6 +441,19 @@
         "delete": "Delete replacement for {{search}}",
         "moveUp": "Move replacement for {{search}} up",
         "moveDown": "Move replacement for {{search}} down"
+      },
+      "transfer": {
+        "import": "Import",
+        "export": "Export",
+        "jsonFiles": "JSON files",
+        "importTitle": "Import replacement rules",
+        "exportTitle": "Export replacement rules",
+        "importSuccess_one": "Imported {{count}} replacement rule.",
+        "importSuccess_other": "Imported {{count}} replacement rules.",
+        "exportSuccess": "Replacement rules exported.",
+        "invalidFile": "That file does not contain a valid replacement-rule list.",
+        "importError": "The replacement rules could not be imported.",
+        "exportError": "The replacement rules could not be exported."
       },
       "magic": {
         "date": "Insert the current date.",

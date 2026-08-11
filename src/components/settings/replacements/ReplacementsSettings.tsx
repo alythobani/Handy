@@ -8,10 +8,17 @@ import { SettingsGroup } from "../../ui/SettingsGroup";
 import { ToggleSwitch } from "../../ui/ToggleSwitch";
 import { ReplacementEditor } from "./ReplacementEditor";
 import { ReplacementList } from "./ReplacementList";
+import { ReplacementTransferActions } from "./ReplacementTransferActions";
 import {
   createEmptyReplacement,
   type CompleteReplacement,
 } from "./replacementDefaults";
+import {
+  getIndexAfterDeletion,
+  getIndexAfterInsertion,
+  getIndexAfterMove,
+  mapReplacementIndices,
+} from "./replacementIndices";
 
 interface ActiveEditor {
   index: number | null;
@@ -21,6 +28,9 @@ export const ReplacementsSettings: React.FC = () => {
   const { t } = useTranslation();
   const { getSetting, updateSetting, isUpdating } = useSettings();
   const [activeEditor, setActiveEditor] = useState<ActiveEditor | null>(null);
+  const [recentlyImportedIndices, setRecentlyImportedIndices] = useState<
+    Set<number>
+  >(new Set());
   const replacements = getSetting("replacements") ?? [];
   const replacementsEnabled = getSetting("replacements_enabled") ?? true;
   const replacementsAreUpdating = isUpdating("replacements");
@@ -37,6 +47,7 @@ export const ReplacementsSettings: React.FC = () => {
             index === activeEditor.index ? replacement : currentReplacement,
           );
     void updateSetting("replacements", updatedReplacements);
+    setRecentlyImportedIndices(new Set());
     setActiveEditor(null);
   };
   const handleDelete = (deletedIndex: number) => {
@@ -45,14 +56,20 @@ export const ReplacementsSettings: React.FC = () => {
       replacements.filter((_, index) => index !== deletedIndex),
     );
     setActiveEditor((currentEditor) => {
-      if (currentEditor?.index === deletedIndex) {
-        return null;
+      if (currentEditor?.index == null) {
+        return currentEditor;
       }
-      if (currentEditor?.index != null && currentEditor.index > deletedIndex) {
-        return { index: currentEditor.index - 1 };
-      }
-      return currentEditor;
+      const updatedIndex = getIndexAfterDeletion(
+        currentEditor.index,
+        deletedIndex,
+      );
+      return updatedIndex === null ? null : { index: updatedIndex };
     });
+    setRecentlyImportedIndices((currentIndices) =>
+      mapReplacementIndices(currentIndices, (index) =>
+        getIndexAfterDeletion(index, deletedIndex),
+      ),
+    );
   };
   const handleToggle = (toggledIndex: number) => {
     void updateSetting(
@@ -71,14 +88,18 @@ export const ReplacementsSettings: React.FC = () => {
     });
     void updateSetting("replacements", updatedReplacements);
     setActiveEditor((currentEditor) => {
-      if (
-        currentEditor?.index != null &&
-        currentEditor.index > duplicatedIndex
-      ) {
-        return { index: currentEditor.index + 1 };
+      if (currentEditor?.index == null) {
+        return currentEditor;
       }
-      return currentEditor;
+      return {
+        index: getIndexAfterInsertion(currentEditor.index, duplicatedIndex + 1),
+      };
     });
+    setRecentlyImportedIndices((currentIndices) =>
+      mapReplacementIndices(currentIndices, (index) =>
+        getIndexAfterInsertion(index, duplicatedIndex + 1),
+      ),
+    );
   };
   const handleReorder = (sourceIndex: number, targetIndex: number) => {
     if (sourceIndex === targetIndex) {
@@ -89,21 +110,31 @@ export const ReplacementsSettings: React.FC = () => {
     updatedReplacements.splice(targetIndex, 0, movedReplacement);
     void updateSetting("replacements", updatedReplacements);
     setActiveEditor((currentEditor) => {
-      const editingIndex = currentEditor?.index;
-      if (editingIndex == null) {
+      if (currentEditor?.index == null) {
         return currentEditor;
       }
-      if (editingIndex === sourceIndex) {
-        return { index: targetIndex };
-      }
-      if (sourceIndex < editingIndex && targetIndex >= editingIndex) {
-        return { index: editingIndex - 1 };
-      }
-      if (sourceIndex > editingIndex && targetIndex <= editingIndex) {
-        return { index: editingIndex + 1 };
-      }
-      return currentEditor;
+      return {
+        index: getIndexAfterMove(currentEditor.index, sourceIndex, targetIndex),
+      };
     });
+    setRecentlyImportedIndices((currentIndices) =>
+      mapReplacementIndices(currentIndices, (index) =>
+        getIndexAfterMove(index, sourceIndex, targetIndex),
+      ),
+    );
+  };
+  const handleImport = (importedReplacements: Replacement[]) => {
+    const firstImportedIndex = replacements.length;
+    void updateSetting("replacements", [
+      ...replacements,
+      ...importedReplacements,
+    ]);
+    setRecentlyImportedIndices(
+      new Set(
+        importedReplacements.map((_, index) => firstImportedIndex + index),
+      ),
+    );
+    setActiveEditor(null);
   };
   return (
     <div className="max-w-3xl w-full mx-auto space-y-6">
@@ -153,6 +184,7 @@ export const ReplacementsSettings: React.FC = () => {
         ) : replacements.length > 0 ? (
           <ReplacementList
             replacements={replacements}
+            recentlyImportedIndices={recentlyImportedIndices}
             disabled={replacementsAreUpdating}
             onEdit={(index) => setActiveEditor({ index })}
             onDelete={handleDelete}
@@ -161,6 +193,11 @@ export const ReplacementsSettings: React.FC = () => {
             onReorder={handleReorder}
           />
         ) : null}
+        <ReplacementTransferActions
+          replacements={replacements}
+          disabled={replacementsAreUpdating}
+          onImport={handleImport}
+        />
       </SettingsGroup>
     </div>
   );

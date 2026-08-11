@@ -18,6 +18,7 @@ interface ReplacementRowProps {
   replacement: Replacement;
   disabled: boolean;
   isDuplicate: boolean;
+  isRecentlyImported: boolean;
   isDragging: boolean;
   isDropTarget: boolean;
   reorderingDisabled: boolean;
@@ -39,6 +40,7 @@ export const ReplacementRow: React.FC<ReplacementRowProps> = ({
   replacement,
   disabled,
   isDuplicate,
+  isRecentlyImported,
   isDragging,
   isDropTarget,
   reorderingDisabled,
@@ -108,6 +110,11 @@ export const ReplacementRow: React.FC<ReplacementRowProps> = ({
         </code>
       </div>
       <div className="flex shrink-0 items-center gap-1">
+        {isRecentlyImported && (
+          <span className="rounded bg-green-500/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-green-400">
+            {t("settings.replacements.rule.importedBadge")}
+          </span>
+        )}
         {replacement.is_regex && (
           <span className="rounded bg-blue-500/10 px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-blue-400">
             {t("settings.replacements.rule.regexBadge")}
