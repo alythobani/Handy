@@ -116,23 +116,30 @@ export const Sidebar: React.FC<SidebarProps> = ({
           const isActive = activeSection === section.id;
 
           return (
-            <div
+            <button
+              type="button"
               key={section.id}
-              className={`flex gap-2 items-center p-2 w-full rounded-lg cursor-pointer transition-colors ${
+              aria-current={isActive ? "page" : undefined}
+              className={`flex gap-2 items-center p-2 w-full rounded-lg cursor-pointer text-start transition-colors ${
                 isActive
                   ? "bg-logo-primary/80"
                   : "hover:bg-mid-gray/20 hover:opacity-100 opacity-85"
               }`}
               onClick={() => onSectionChange(section.id)}
             >
-              <Icon width={24} height={24} className="shrink-0" />
-              <p
+              <Icon
+                width={24}
+                height={24}
+                className="shrink-0"
+                aria-hidden="true"
+              />
+              <span
                 className="text-sm font-medium truncate"
                 title={t(section.labelKey)}
               >
                 {t(section.labelKey)}
-              </p>
-            </div>
+              </span>
+            </button>
           );
         })}
       </div>

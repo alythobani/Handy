@@ -78,6 +78,7 @@ export const ReplacementList: React.FC<ReplacementListProps> = ({
           value={filter}
           onChange={(event) => setFilter(event.target.value)}
           placeholder={t("settings.replacements.filter.placeholder")}
+          aria-label={t("settings.replacements.filter.placeholder")}
           disabled={disabled}
           variant="compact"
         />
@@ -96,44 +97,51 @@ export const ReplacementList: React.FC<ReplacementListProps> = ({
         )}
       </div>
       {visibleReplacements.length === 0 ? (
-        <p className="px-4 py-8 text-center text-sm text-mid-gray">
+        <p
+          role="status"
+          className="px-4 py-8 text-center text-sm text-mid-gray"
+        >
           {t("settings.replacements.filter.noResults")}
         </p>
       ) : (
-        visibleReplacements.map(({ replacement, index }) => (
-          <ReplacementRow
-            key={`${index}-${replacement.search}`}
-            replacement={replacement}
-            disabled={disabled}
-            isDuplicate={duplicateSearches.has(normalizedSearch(replacement))}
-            isRecentlyImported={recentlyImportedIndices.has(index)}
-            isDragging={draggingIndex === index}
-            isDropTarget={dropTargetIndex === index && draggingIndex !== index}
-            reorderingDisabled={reorderingDisabled}
-            canMoveUp={index > 0}
-            canMoveDown={index < replacements.length - 1}
-            onEdit={() => onEdit(index)}
-            onDelete={() => onDelete(index)}
-            onToggle={() => onToggle(index)}
-            onDuplicate={() => onDuplicate(index)}
-            onMoveUp={() => onReorder(index, index - 1)}
-            onMoveDown={() => onReorder(index, index + 1)}
-            onDragStart={(event) => {
-              event.dataTransfer.effectAllowed = "move";
-              setDraggingIndex(index);
-            }}
-            onDragEnter={() => {
-              if (!reorderingDisabled) {
-                setDropTargetIndex(index);
+        <div role="list">
+          {visibleReplacements.map(({ replacement, index }) => (
+            <ReplacementRow
+              key={`${index}-${replacement.search}`}
+              replacement={replacement}
+              disabled={disabled}
+              isDuplicate={duplicateSearches.has(normalizedSearch(replacement))}
+              isRecentlyImported={recentlyImportedIndices.has(index)}
+              isDragging={draggingIndex === index}
+              isDropTarget={
+                dropTargetIndex === index && draggingIndex !== index
               }
-            }}
-            onDragEnd={resetDragState}
-            onDrop={(event) => {
-              event.preventDefault();
-              handleDrop(index);
-            }}
-          />
-        ))
+              reorderingDisabled={reorderingDisabled}
+              canMoveUp={index > 0}
+              canMoveDown={index < replacements.length - 1}
+              onEdit={() => onEdit(index)}
+              onDelete={() => onDelete(index)}
+              onToggle={() => onToggle(index)}
+              onDuplicate={() => onDuplicate(index)}
+              onMoveUp={() => onReorder(index, index - 1)}
+              onMoveDown={() => onReorder(index, index + 1)}
+              onDragStart={(event) => {
+                event.dataTransfer.effectAllowed = "move";
+                setDraggingIndex(index);
+              }}
+              onDragEnter={() => {
+                if (!reorderingDisabled) {
+                  setDropTargetIndex(index);
+                }
+              }}
+              onDragEnd={resetDragState}
+              onDrop={(event) => {
+                event.preventDefault();
+                handleDrop(index);
+              }}
+            />
+          ))}
+        </div>
       )}
     </div>
   );

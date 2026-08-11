@@ -73,24 +73,27 @@ export const ReplacementRow: React.FC<ReplacementRowProps> = ({
     replacement.capitalization_rule !== "none";
   return (
     <div
+      role="listitem"
       className={`flex items-center gap-2 px-4 py-3 transition-all ${
         replacementIsEnabled ? "" : "bg-red-500/5 opacity-60"
       } ${isDuplicate ? "ring-1 ring-inset ring-yellow-500/40" : ""} ${
         isDragging ? "scale-[0.99] opacity-40" : ""
       } ${isDropTarget ? "bg-logo-primary/10" : ""}`}
-      draggable={!reorderingDisabled}
-      onDragStart={onDragStart}
       onDragEnter={onDragEnter}
       onDragOver={(event) => event.preventDefault()}
-      onDragEnd={onDragEnd}
       onDrop={onDrop}
     >
-      <GripVertical
-        className={`h-4 w-4 shrink-0 text-mid-gray ${
+      <span
+        draggable={!reorderingDisabled}
+        onDragStart={onDragStart}
+        onDragEnd={onDragEnd}
+        className={
           reorderingDisabled ? "cursor-not-allowed opacity-30" : "cursor-grab"
-        }`}
+        }
         aria-hidden="true"
-      />
+      >
+        <GripVertical className="h-4 w-4 shrink-0 text-mid-gray" />
+      </span>
       <div className="min-w-0 flex flex-1 items-center gap-3">
         <code className="min-w-0 flex-1 truncate rounded bg-mid-gray/10 px-2 py-1 text-sm">
           {replacement.search}
