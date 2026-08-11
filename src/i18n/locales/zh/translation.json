@@ -16,7 +16,8 @@
     "postProcessing": "后处理",
     "history": "历史记录",
     "debug": "调试",
-    "about": "关于"
+    "about": "关于",
+    "replacements": "替换"
   },
   "onboarding": {
     "subtitle": "请选择一个转录模型以开始使用",
@@ -604,6 +605,89 @@
       "whatsNewUpdates": {
         "label": "显示新功能",
         "description": "Handy 更新后显示发行说明"
+      }
+    },
+    "replacements": {
+      "groups": {
+        "behavior": "Behavior",
+        "rules": "Replacement Rules"
+      },
+      "enable": {
+        "label": "启用替换",
+        "description": "全局启用或禁用所有文本替换"
+      },
+      "rulesDescription": "Rules run from top to bottom before optional AI post-processing.",
+      "addNew": "添加新替换",
+      "emptyState": "No replacement rules yet.",
+      "filter": {
+        "placeholder": "筛选替换...",
+        "clear": "Clear replacement filter",
+        "noResults": "No replacement rules match this filter."
+      },
+      "editor": {
+        "addTitle": "New Replacement",
+        "editTitle": "Edit Replacement",
+        "searchLabel": "Find",
+        "searchPlaceholder": "要替换的词",
+        "replaceLabel": "Replace with",
+        "replacePlaceholder": "替换为",
+        "emptyReplacementHint": "Leave the replacement empty to delete matching text.",
+        "advancedTitle": "高级选项",
+        "regexLabel": "使用 Rust 正则语法（类似 Perl/Python）。支持 (?i) 忽略大小写，\\d 表示数字等。",
+        "regexError": "Invalid regular expression: {{error}}",
+        "trimPunctuationBefore": "Trim punctuation before the match",
+        "trimPunctuationAfter": "Trim punctuation after the match",
+        "trimSpacesBefore": "Trim spaces before the match",
+        "trimSpacesAfter": "Trim spaces after the match",
+        "capitalization": {
+          "label": "下一个词：",
+          "none": "无",
+          "uppercase": "Make uppercase",
+          "lowercase": "Make lowercase"
+        },
+        "cancel": "Cancel",
+        "add": "添加替换",
+        "update": "更新替换"
+      },
+      "rule": {
+        "emptyReplacement": "Delete match",
+        "disabledBadge": "已禁用",
+        "duplicateBadge": "重复",
+        "importedBadge": "新导入",
+        "regexBadge": "正则表达式",
+        "magicBadge": "魔法",
+        "trimmingBadge": "Trimming",
+        "capitalizationBadge": "Case",
+        "enable": "Enable replacement for {{search}}",
+        "disable": "Disable replacement for {{search}}",
+        "edit": "Edit replacement for {{search}}",
+        "duplicate": "Duplicate replacement for {{search}}",
+        "delete": "Delete replacement for {{search}}",
+        "moveUp": "Move replacement for {{search}} up",
+        "moveDown": "Move replacement for {{search}} down"
+      },
+      "transfer": {
+        "import": "Import",
+        "export": "Export",
+        "jsonFiles": "JSON files",
+        "importTitle": "Import replacement rules",
+        "exportTitle": "Export replacement rules",
+        "importSuccess_one": "Imported {{count}} replacement rule.",
+        "importSuccess_other": "Imported {{count}} replacement rules.",
+        "exportSuccess": "Replacement rules exported.",
+        "invalidFile": "That file does not contain a valid replacement-rule list.",
+        "importError": "The replacement rules could not be imported.",
+        "exportError": "The replacement rules could not be exported."
+      },
+      "magic": {
+        "date": "Insert the current date.",
+        "time": "Insert the current time.",
+        "lowercase": "Lowercase the complete processed transcription.",
+        "lowcase": "Alias for lowercase.",
+        "uppercase": "Uppercase the complete processed transcription.",
+        "capitalize": "Capitalize every word in the complete processed transcription.",
+        "nospace": "Remove spaces from the complete processed transcription.",
+        "run": "Run a quoted shell command. Empty commands remain text."
       }
     }
   },

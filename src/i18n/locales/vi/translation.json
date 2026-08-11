@@ -16,7 +16,8 @@
     "postProcessing": "Xử lý sau",
     "history": "Lịch sử",
     "debug": "Gỡ lỗi",
-    "about": "Giới thiệu"
+    "about": "Giới thiệu",
+    "replacements": "Thay thế"
   },
   "onboarding": {
     "subtitle": "Để bắt đầu, hãy chọn một mô hình chuyển đổi giọng nói",
@@ -604,6 +605,89 @@
       "whatsNewUpdates": {
         "label": "Hiển thị điểm mới",
         "description": "Hiển thị ghi chú phát hành sau khi Handy cập nhật"
+      }
+    },
+    "replacements": {
+      "groups": {
+        "behavior": "Behavior",
+        "rules": "Replacement Rules"
+      },
+      "enable": {
+        "label": "Bật Thay thế",
+        "description": "Bật hoặc tắt tất cả các thay thế văn bản toàn cục"
+      },
+      "rulesDescription": "Rules run from top to bottom before optional AI post-processing.",
+      "addNew": "Thêm thay thế mới",
+      "emptyState": "No replacement rules yet.",
+      "filter": {
+        "placeholder": "Lọc thay thế...",
+        "clear": "Clear replacement filter",
+        "noResults": "No replacement rules match this filter."
+      },
+      "editor": {
+        "addTitle": "New Replacement",
+        "editTitle": "Edit Replacement",
+        "searchLabel": "Find",
+        "searchPlaceholder": "Từ cần thay",
+        "replaceLabel": "Replace with",
+        "replacePlaceholder": "Thay thế",
+        "emptyReplacementHint": "Leave the replacement empty to delete matching text.",
+        "advancedTitle": "Tùy chọn nâng cao",
+        "regexLabel": "Sử dụng cú pháp regex của Rust (tương tự Perl/Python). Hỗ trợ (?i) không phân biệt hoa thường, \\d cho chữ số, v.v.",
+        "regexError": "Invalid regular expression: {{error}}",
+        "trimPunctuationBefore": "Trim punctuation before the match",
+        "trimPunctuationAfter": "Trim punctuation after the match",
+        "trimSpacesBefore": "Trim spaces before the match",
+        "trimSpacesAfter": "Trim spaces after the match",
+        "capitalization": {
+          "label": "Từ tiếp theo:",
+          "none": "Không",
+          "uppercase": "Make uppercase",
+          "lowercase": "Make lowercase"
+        },
+        "cancel": "Cancel",
+        "add": "Thêm thay thế",
+        "update": "Cập nhật thay thế"
+      },
+      "rule": {
+        "emptyReplacement": "Delete match",
+        "disabledBadge": "Đã tắt",
+        "duplicateBadge": "Bản sao",
+        "importedBadge": "Mới nhập",
+        "regexBadge": "Regex",
+        "magicBadge": "Ma thuật",
+        "trimmingBadge": "Trimming",
+        "capitalizationBadge": "Case",
+        "enable": "Enable replacement for {{search}}",
+        "disable": "Disable replacement for {{search}}",
+        "edit": "Edit replacement for {{search}}",
+        "duplicate": "Duplicate replacement for {{search}}",
+        "delete": "Delete replacement for {{search}}",
+        "moveUp": "Move replacement for {{search}} up",
+        "moveDown": "Move replacement for {{search}} down"
+      },
+      "transfer": {
+        "import": "Import",
+        "export": "Export",
+        "jsonFiles": "JSON files",
+        "importTitle": "Import replacement rules",
+        "exportTitle": "Export replacement rules",
+        "importSuccess_one": "Imported {{count}} replacement rule.",
+        "importSuccess_other": "Imported {{count}} replacement rules.",
+        "exportSuccess": "Replacement rules exported.",
+        "invalidFile": "That file does not contain a valid replacement-rule list.",
+        "importError": "The replacement rules could not be imported.",
+        "exportError": "The replacement rules could not be exported."
+      },
+      "magic": {
+        "date": "Insert the current date.",
+        "time": "Insert the current time.",
+        "lowercase": "Lowercase the complete processed transcription.",
+        "lowcase": "Alias for lowercase.",
+        "uppercase": "Uppercase the complete processed transcription.",
+        "capitalize": "Capitalize every word in the complete processed transcription.",
+        "nospace": "Remove spaces from the complete processed transcription.",
+        "run": "Run a quoted shell command. Empty commands remain text."
       }
     }
   },

@@ -16,7 +16,8 @@
     "postProcessing": "後処理",
     "history": "履歴",
     "debug": "デバッグ",
-    "about": "概要"
+    "about": "概要",
+    "replacements": "置換"
   },
   "onboarding": {
     "subtitle": "開始するには、文字起こしのモデルを選択してください",
@@ -604,6 +605,89 @@
       "whatsNewUpdates": {
         "label": "新機能を表示",
         "description": "Handy のアップデート後にリリースノートを表示"
+      }
+    },
+    "replacements": {
+      "groups": {
+        "behavior": "Behavior",
+        "rules": "Replacement Rules"
+      },
+      "enable": {
+        "label": "置換を有効化",
+        "description": "すべてのテキスト置換をグローバルに有効/無効にします"
+      },
+      "rulesDescription": "Rules run from top to bottom before optional AI post-processing.",
+      "addNew": "新しい置換を追加",
+      "emptyState": "No replacement rules yet.",
+      "filter": {
+        "placeholder": "置換をフィルタ...",
+        "clear": "Clear replacement filter",
+        "noResults": "No replacement rules match this filter."
+      },
+      "editor": {
+        "addTitle": "New Replacement",
+        "editTitle": "Edit Replacement",
+        "searchLabel": "Find",
+        "searchPlaceholder": "置換する語",
+        "replaceLabel": "Replace with",
+        "replacePlaceholder": "置換後",
+        "emptyReplacementHint": "Leave the replacement empty to delete matching text.",
+        "advancedTitle": "詳細オプション",
+        "regexLabel": "Rustの正規表現構文を使用します（Perl/Pythonに類似）。(?i)による大文字小文字無視、\\dによる数字などをサポートします。",
+        "regexError": "Invalid regular expression: {{error}}",
+        "trimPunctuationBefore": "Trim punctuation before the match",
+        "trimPunctuationAfter": "Trim punctuation after the match",
+        "trimSpacesBefore": "Trim spaces before the match",
+        "trimSpacesAfter": "Trim spaces after the match",
+        "capitalization": {
+          "label": "次の単語:",
+          "none": "なし",
+          "uppercase": "Make uppercase",
+          "lowercase": "Make lowercase"
+        },
+        "cancel": "Cancel",
+        "add": "置換を追加",
+        "update": "置換を更新"
+      },
+      "rule": {
+        "emptyReplacement": "Delete match",
+        "disabledBadge": "無効",
+        "duplicateBadge": "重複",
+        "importedBadge": "最近インポート",
+        "regexBadge": "正規表現",
+        "magicBadge": "マジック",
+        "trimmingBadge": "Trimming",
+        "capitalizationBadge": "Case",
+        "enable": "Enable replacement for {{search}}",
+        "disable": "Disable replacement for {{search}}",
+        "edit": "Edit replacement for {{search}}",
+        "duplicate": "Duplicate replacement for {{search}}",
+        "delete": "Delete replacement for {{search}}",
+        "moveUp": "Move replacement for {{search}} up",
+        "moveDown": "Move replacement for {{search}} down"
+      },
+      "transfer": {
+        "import": "Import",
+        "export": "Export",
+        "jsonFiles": "JSON files",
+        "importTitle": "Import replacement rules",
+        "exportTitle": "Export replacement rules",
+        "importSuccess_one": "Imported {{count}} replacement rule.",
+        "importSuccess_other": "Imported {{count}} replacement rules.",
+        "exportSuccess": "Replacement rules exported.",
+        "invalidFile": "That file does not contain a valid replacement-rule list.",
+        "importError": "The replacement rules could not be imported.",
+        "exportError": "The replacement rules could not be exported."
+      },
+      "magic": {
+        "date": "Insert the current date.",
+        "time": "Insert the current time.",
+        "lowercase": "Lowercase the complete processed transcription.",
+        "lowcase": "Alias for lowercase.",
+        "uppercase": "Uppercase the complete processed transcription.",
+        "capitalize": "Capitalize every word in the complete processed transcription.",
+        "nospace": "Remove spaces from the complete processed transcription.",
+        "run": "Run a quoted shell command. Empty commands remain text."
       }
     }
   },

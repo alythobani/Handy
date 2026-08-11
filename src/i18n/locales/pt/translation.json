@@ -16,7 +16,8 @@
     "postProcessing": "Pós-Processamento",
     "history": "Histórico",
     "debug": "Depuração",
-    "about": "Sobre"
+    "about": "Sobre",
+    "replacements": "Substituições"
   },
   "onboarding": {
     "subtitle": "Para começar, escolha um modelo de transcrição",
@@ -604,6 +605,89 @@
       "whatsNewUpdates": {
         "label": "Mostrar novidades",
         "description": "Mostrar notas de versão após atualizações do Handy"
+      }
+    },
+    "replacements": {
+      "groups": {
+        "behavior": "Behavior",
+        "rules": "Replacement Rules"
+      },
+      "enable": {
+        "label": "Enable Replacements",
+        "description": "Apply deterministic replacement rules to every transcription."
+      },
+      "rulesDescription": "Rules run from top to bottom before optional AI post-processing.",
+      "addNew": "Add Replacement",
+      "emptyState": "No replacement rules yet.",
+      "filter": {
+        "placeholder": "Filter replacements",
+        "clear": "Clear replacement filter",
+        "noResults": "No replacement rules match this filter."
+      },
+      "editor": {
+        "addTitle": "New Replacement",
+        "editTitle": "Edit Replacement",
+        "searchLabel": "Find",
+        "searchPlaceholder": "Text to find",
+        "replaceLabel": "Replace with",
+        "replacePlaceholder": "Replacement text",
+        "emptyReplacementHint": "Leave the replacement empty to delete matching text.",
+        "advancedTitle": "Advanced Options",
+        "regexLabel": "Find with a Rust regular expression",
+        "regexError": "Invalid regular expression: {{error}}",
+        "trimPunctuationBefore": "Trim punctuation before the match",
+        "trimPunctuationAfter": "Trim punctuation after the match",
+        "trimSpacesBefore": "Trim spaces before the match",
+        "trimSpacesAfter": "Trim spaces after the match",
+        "capitalization": {
+          "label": "Next character",
+          "none": "Keep unchanged",
+          "uppercase": "Make uppercase",
+          "lowercase": "Make lowercase"
+        },
+        "cancel": "Cancel",
+        "add": "Add",
+        "update": "Update"
+      },
+      "rule": {
+        "emptyReplacement": "Delete match",
+        "disabledBadge": "Disabled",
+        "duplicateBadge": "Duplicate",
+        "importedBadge": "Imported",
+        "regexBadge": "Regex",
+        "magicBadge": "Magic",
+        "trimmingBadge": "Trimming",
+        "capitalizationBadge": "Case",
+        "enable": "Enable replacement for {{search}}",
+        "disable": "Disable replacement for {{search}}",
+        "edit": "Edit replacement for {{search}}",
+        "duplicate": "Duplicate replacement for {{search}}",
+        "delete": "Delete replacement for {{search}}",
+        "moveUp": "Move replacement for {{search}} up",
+        "moveDown": "Move replacement for {{search}} down"
+      },
+      "transfer": {
+        "import": "Import",
+        "export": "Export",
+        "jsonFiles": "JSON files",
+        "importTitle": "Import replacement rules",
+        "exportTitle": "Export replacement rules",
+        "importSuccess_one": "Imported {{count}} replacement rule.",
+        "importSuccess_other": "Imported {{count}} replacement rules.",
+        "exportSuccess": "Replacement rules exported.",
+        "invalidFile": "That file does not contain a valid replacement-rule list.",
+        "importError": "The replacement rules could not be imported.",
+        "exportError": "The replacement rules could not be exported."
+      },
+      "magic": {
+        "date": "Insert the current date.",
+        "time": "Insert the current time.",
+        "lowercase": "Lowercase the complete processed transcription.",
+        "lowcase": "Alias for lowercase.",
+        "uppercase": "Uppercase the complete processed transcription.",
+        "capitalize": "Capitalize every word in the complete processed transcription.",
+        "nospace": "Remove spaces from the complete processed transcription.",
+        "run": "Run a quoted shell command. Empty commands remain text."
       }
     }
   },

@@ -16,7 +16,8 @@
     "postProcessing": "Post proceso",
     "history": "Historial",
     "debug": "Depuración",
-    "about": "Acerca de"
+    "about": "Acerca de",
+    "replacements": "Reemplazos"
   },
   "onboarding": {
     "subtitle": "Para comenzar, elige un modelo de transcripción",
@@ -604,6 +605,89 @@
       "whatsNewUpdates": {
         "label": "Mostrar novedades",
         "description": "Mostrar notas de la versión después de las actualizaciones de Handy"
+      }
+    },
+    "replacements": {
+      "groups": {
+        "behavior": "Behavior",
+        "rules": "Replacement Rules"
+      },
+      "enable": {
+        "label": "Habilitar reemplazos",
+        "description": "Habilitar o deshabilitar todos los reemplazos de texto globalmente"
+      },
+      "rulesDescription": "Rules run from top to bottom before optional AI post-processing.",
+      "addNew": "Agregar nuevo reemplazo",
+      "emptyState": "No replacement rules yet.",
+      "filter": {
+        "placeholder": "Filtrar reemplazos...",
+        "clear": "Clear replacement filter",
+        "noResults": "No replacement rules match this filter."
+      },
+      "editor": {
+        "addTitle": "New Replacement",
+        "editTitle": "Edit Replacement",
+        "searchLabel": "Find",
+        "searchPlaceholder": "Palabra a reemplazar",
+        "replaceLabel": "Replace with",
+        "replacePlaceholder": "Reemplazo",
+        "emptyReplacementHint": "Leave the replacement empty to delete matching text.",
+        "advancedTitle": "Opciones avanzadas",
+        "regexLabel": "Usa la sintaxis de expresiones regulares de Rust (similar a Perl/Python). Admite (?i) para case-insensitive, \\d para dígitos, etc.",
+        "regexError": "Invalid regular expression: {{error}}",
+        "trimPunctuationBefore": "Trim punctuation before the match",
+        "trimPunctuationAfter": "Trim punctuation after the match",
+        "trimSpacesBefore": "Trim spaces before the match",
+        "trimSpacesAfter": "Trim spaces after the match",
+        "capitalization": {
+          "label": "Siguiente palabra:",
+          "none": "Ninguno",
+          "uppercase": "Make uppercase",
+          "lowercase": "Make lowercase"
+        },
+        "cancel": "Cancel",
+        "add": "Agregar reemplazo",
+        "update": "Actualizar reemplazo"
+      },
+      "rule": {
+        "emptyReplacement": "Delete match",
+        "disabledBadge": "Deshabilitado",
+        "duplicateBadge": "Duplicado",
+        "importedBadge": "Importado recientemente",
+        "regexBadge": "Regex",
+        "magicBadge": "Mágico",
+        "trimmingBadge": "Trimming",
+        "capitalizationBadge": "Case",
+        "enable": "Enable replacement for {{search}}",
+        "disable": "Disable replacement for {{search}}",
+        "edit": "Edit replacement for {{search}}",
+        "duplicate": "Duplicate replacement for {{search}}",
+        "delete": "Delete replacement for {{search}}",
+        "moveUp": "Move replacement for {{search}} up",
+        "moveDown": "Move replacement for {{search}} down"
+      },
+      "transfer": {
+        "import": "Import",
+        "export": "Export",
+        "jsonFiles": "JSON files",
+        "importTitle": "Import replacement rules",
+        "exportTitle": "Export replacement rules",
+        "importSuccess_one": "Imported {{count}} replacement rule.",
+        "importSuccess_other": "Imported {{count}} replacement rules.",
+        "exportSuccess": "Replacement rules exported.",
+        "invalidFile": "That file does not contain a valid replacement-rule list.",
+        "importError": "The replacement rules could not be imported.",
+        "exportError": "The replacement rules could not be exported."
+      },
+      "magic": {
+        "date": "Insert the current date.",
+        "time": "Insert the current time.",
+        "lowercase": "Lowercase the complete processed transcription.",
+        "lowcase": "Alias for lowercase.",
+        "uppercase": "Uppercase the complete processed transcription.",
+        "capitalize": "Capitalize every word in the complete processed transcription.",
+        "nospace": "Remove spaces from the complete processed transcription.",
+        "run": "Run a quoted shell command. Empty commands remain text."
       }
     }
   },

@@ -46,7 +46,7 @@ This is a selective port, not a branch merge. Current Handy is hundreds of commi
 - [x] Add filtering, duplicate indicators, enable/disable, and drag ordering
 - [x] Add magic-tag autocomplete and advanced-option controls
 - [x] Add JSON import/export and imported-rule indicators
-- [ ] Add complete translations and accessibility behavior
+- [x] Add complete translation key coverage and accessibility behavior
 - [ ] Build the separate macOS app and perform end-to-end QA alongside official Handy
 
 ## Required Behavior
