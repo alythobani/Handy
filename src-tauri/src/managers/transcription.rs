@@ -4,6 +4,7 @@ use crate::audio_toolkit::{
 };
 use crate::managers::audio::AudioRecordingManager;
 use crate::managers::model::{EngineType, ModelManager};
+use crate::replacements::apply_replacements;
 use crate::settings::{
     get_settings, AppSettings, ModelUnloadTimeout, OrtAcceleratorSetting,
     TranscribeAcceleratorSetting,
@@ -1784,7 +1785,12 @@ fn post_process_transcription_text(
             settings.filler_word_removal_enabled,
         );
 
-        normalize_transcription_output(&without_fillers)
+        let normalized = normalize_transcription_output(&without_fillers);
+        if settings.replacements_enabled {
+            apply_replacements(&normalized, &settings.replacements)
+        } else {
+            normalized
+        }
     })
 }
 
@@ -2141,9 +2147,24 @@ pub fn get_available_accelerators() -> AvailableAccelerators {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::replacements::{CapitalizationRule, Replacement};
 
     fn languages(codes: &[&str]) -> Vec<String> {
         codes.iter().map(|code| (*code).to_string()).collect()
+    }
+
+    fn literal_replacement(search: &str, replace: &str) -> Replacement {
+        Replacement {
+            search: search.to_string(),
+            replace: replace.to_string(),
+            is_regex: false,
+            trim_punctuation_before: false,
+            trim_punctuation_after: false,
+            trim_spaces_before: false,
+            trim_spaces_after: false,
+            capitalization_rule: CapitalizationRule::None,
+            enabled: true,
+        }
     }
 
     #[test]
@@ -2192,6 +2213,41 @@ mod tests {
         });
 
         assert_eq!(result, raw);
+    }
+
+    #[test]
+    fn replacements_run_after_transcription_normalization() {
+        let settings = AppSettings {
+            replacements: vec![literal_replacement("hello world", "normalized")],
+            filler_word_removal_enabled: false,
+            ..Default::default()
+        };
+        let result = post_process_transcription_text(
+            "  hello    world  ".to_string(),
+            &settings,
+            false,
+            &OutputLanguageEvidence::Unknown,
+            &[],
+        );
+        assert_eq!(result, "normalized");
+    }
+
+    #[test]
+    fn global_replacements_toggle_skips_every_rule() {
+        let settings = AppSettings {
+            replacements: vec![literal_replacement("hello", "changed")],
+            replacements_enabled: false,
+            filler_word_removal_enabled: false,
+            ..Default::default()
+        };
+        let result = post_process_transcription_text(
+            "hello".to_string(),
+            &settings,
+            false,
+            &OutputLanguageEvidence::Unknown,
+            &[],
+        );
+        assert_eq!(result, "hello");
     }
 
     #[test]
