@@ -1,6 +1,6 @@
 # Handy Replacements Port
 
-Last updated: 2026-08-11
+Last updated: 2026-08-12
 
 ## Goal
 
@@ -27,7 +27,9 @@ This is a selective port, not a branch merge. Current Handy is hundreds of commi
 - Validate invalid regexes in the UI while the backend continues to fail open.
 - Use one shared punctuation definition for before/after trimming.
 - Apply magic tags in textual order rather than always prioritizing `[run]`.
+- Treat empty or mismatched-quote `[run]` syntax as ordinary text instead of a command.
 - Suppress pasted output for `[run]` only when the command process starts successfully.
+- Apply next-character capitalization across arbitrary horizontal whitespace and with Unicode-aware casing.
 - Internationalize all user-facing strings for every current Handy locale.
 - Preserve add-form focus without changing the shared `Input` component.
 
@@ -48,6 +50,7 @@ This is a selective port, not a branch merge. Current Handy is hundreds of commi
 - [x] Add JSON import/export and imported-rule indicators
 - [x] Add complete translation key coverage and accessibility behavior
 - [x] Build the separate macOS app bundle
+- [ ] Complete the [UI parity and polish pass](ui-parity-and-polish.md)
 - [ ] Perform end-to-end QA alongside official Handy
 
 ## Required Behavior
