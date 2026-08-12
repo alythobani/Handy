@@ -10,6 +10,7 @@ import {
   Space,
 } from "lucide-react";
 import type { CapitalizationRule } from "@/bindings";
+import { AdvancedOptionHelp } from "./AdvancedOptionHelp";
 import type { CompleteReplacement } from "./replacementDefaults";
 
 interface AdvancedReplacementOptionsProps {
@@ -41,14 +42,12 @@ const AdvancedOptionRow: React.FC<AdvancedOptionRowProps> = ({
   children,
 }) => (
   <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3">
-    <div
-      className="flex min-w-0 items-center gap-2 text-xs font-medium text-mid-gray"
-      title={description}
-    >
+    <div className="flex min-w-0 items-center gap-2 text-xs font-medium text-mid-gray">
       <span className="shrink-0" aria-hidden="true">
         {icon}
       </span>
       <span className="truncate">{label}</span>
+      <AdvancedOptionHelp description={description} />
     </div>
     {children}
   </div>
@@ -252,7 +251,7 @@ export const AdvancedReplacementOptions: React.FC<
           <AdvancedOptionRow
             icon={<CaseUpper className="h-4 w-4" />}
             label={t("settings.replacements.editor.capitalization.label")}
-            description={t("settings.replacements.editor.capitalization.label")}
+            description={`${t("settings.replacements.editor.capitalization.none")}. ${t("settings.replacements.editor.capitalization.uppercase")}. ${t("settings.replacements.editor.capitalization.lowercase")}.`}
           >
             <div
               role="group"
