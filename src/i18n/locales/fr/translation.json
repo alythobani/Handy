@@ -638,16 +638,20 @@
         "before": "Before",
         "after": "After",
         "regexLabel": "Utilisez la syntaxe Rust regex (similaire à Perl/Python). Prend en charge (?i) pour insensibilité à la casse, \\d pour les chiffres, etc.",
+        "regexTooltip": "Use regex (Rust syntax). Supports `(?i)` for case-insensitivity, `\\d` for digits, capture groups like `$1`, etc.",
         "regexError": "Invalid regular expression: {{error}}",
         "trimPunctuationBefore": "Trim punctuation before the match",
         "trimPunctuationAfter": "Trim punctuation after the match",
+        "trimPunctuationTooltip": "Remove punctuation around the match.",
         "trimSpacesBefore": "Trim spaces before the match",
         "trimSpacesAfter": "Trim spaces after the match",
+        "trimSpacesTooltip": "Remove spaces around the match.",
         "capitalization": {
           "label": "Mot suivant :",
           "none": "Aucun",
           "uppercase": "Make uppercase",
-          "lowercase": "Make lowercase"
+          "lowercase": "Make lowercase",
+          "tooltip": "Change the case (e.g. upper/lower) of the first non-space character after the replacement."
         },
         "cancel": "Cancel",
         "add": "Ajouter le remplacement",

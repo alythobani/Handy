@@ -638,16 +638,20 @@
         "before": "Before",
         "after": "After",
         "regexLabel": "Sử dụng cú pháp regex của Rust (tương tự Perl/Python). Hỗ trợ (?i) không phân biệt hoa thường, \\d cho chữ số, v.v.",
+        "regexTooltip": "Use regex (Rust syntax). Supports `(?i)` for case-insensitivity, `\\d` for digits, capture groups like `$1`, etc.",
         "regexError": "Invalid regular expression: {{error}}",
         "trimPunctuationBefore": "Trim punctuation before the match",
         "trimPunctuationAfter": "Trim punctuation after the match",
+        "trimPunctuationTooltip": "Remove punctuation around the match.",
         "trimSpacesBefore": "Trim spaces before the match",
         "trimSpacesAfter": "Trim spaces after the match",
+        "trimSpacesTooltip": "Remove spaces around the match.",
         "capitalization": {
           "label": "Từ tiếp theo:",
           "none": "Không",
           "uppercase": "Make uppercase",
-          "lowercase": "Make lowercase"
+          "lowercase": "Make lowercase",
+          "tooltip": "Change the case (e.g. upper/lower) of the first non-space character after the replacement."
         },
         "cancel": "Cancel",
         "add": "Thêm thay thế",

@@ -638,16 +638,20 @@
         "before": "Before",
         "after": "After",
         "regexLabel": "使用 Rust 正则语法（类似 Perl/Python）。支持 (?i) 忽略大小写，\\d 表示数字等。",
+        "regexTooltip": "Use regex (Rust syntax). Supports `(?i)` for case-insensitivity, `\\d` for digits, capture groups like `$1`, etc.",
         "regexError": "Invalid regular expression: {{error}}",
         "trimPunctuationBefore": "Trim punctuation before the match",
         "trimPunctuationAfter": "Trim punctuation after the match",
+        "trimPunctuationTooltip": "Remove punctuation around the match.",
         "trimSpacesBefore": "Trim spaces before the match",
         "trimSpacesAfter": "Trim spaces after the match",
+        "trimSpacesTooltip": "Remove spaces around the match.",
         "capitalization": {
           "label": "下一个词：",
           "none": "无",
           "uppercase": "Make uppercase",
-          "lowercase": "Make lowercase"
+          "lowercase": "Make lowercase",
+          "tooltip": "Change the case (e.g. upper/lower) of the first non-space character after the replacement."
         },
         "cancel": "Cancel",
         "add": "添加替换",

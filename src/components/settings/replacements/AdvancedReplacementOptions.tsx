@@ -157,7 +157,7 @@ export const AdvancedReplacementOptions: React.FC<
           <AdvancedOptionRow
             icon={<Regex className="h-4 w-4" />}
             label={t("settings.replacements.rule.regexBadge")}
-            description={t("settings.replacements.editor.regexLabel")}
+            description={t("settings.replacements.editor.regexTooltip")}
           >
             <input
               type="checkbox"
@@ -173,7 +173,9 @@ export const AdvancedReplacementOptions: React.FC<
           <AdvancedOptionRow
             icon={<Scissors className="h-4 w-4" />}
             label={t("settings.replacements.editor.trimPunctuationLabel")}
-            description={`${t("settings.replacements.editor.trimPunctuationBefore")}. ${t("settings.replacements.editor.trimPunctuationAfter")}.`}
+            description={t(
+              "settings.replacements.editor.trimPunctuationTooltip",
+            )}
           >
             <div
               role="group"
@@ -213,7 +215,7 @@ export const AdvancedReplacementOptions: React.FC<
           <AdvancedOptionRow
             icon={<Space className="h-4 w-4" />}
             label={t("settings.replacements.editor.trimSpacesLabel")}
-            description={`${t("settings.replacements.editor.trimSpacesBefore")}. ${t("settings.replacements.editor.trimSpacesAfter")}.`}
+            description={t("settings.replacements.editor.trimSpacesTooltip")}
           >
             <div
               role="group"
@@ -251,7 +253,9 @@ export const AdvancedReplacementOptions: React.FC<
           <AdvancedOptionRow
             icon={<CaseUpper className="h-4 w-4" />}
             label={t("settings.replacements.editor.capitalization.label")}
-            description={`${t("settings.replacements.editor.capitalization.none")}. ${t("settings.replacements.editor.capitalization.uppercase")}. ${t("settings.replacements.editor.capitalization.lowercase")}.`}
+            description={t(
+              "settings.replacements.editor.capitalization.tooltip",
+            )}
           >
             <div
               role="group"
