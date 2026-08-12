@@ -164,19 +164,20 @@ export const ReplacementsSettings: React.FC = () => {
         title={t("settings.replacements.groups.rules")}
         description={t("settings.replacements.rulesDescription")}
       >
-        <div className="flex items-center justify-end px-4 py-2">
-          <Button
-            type="button"
-            variant="primary"
-            size="sm"
-            onClick={() => setActiveEditor({ index: null })}
-            disabled={activeEditor !== null || replacementsAreUpdating}
-            className="inline-flex items-center gap-1"
-          >
-            <Plus className="h-4 w-4" aria-hidden="true" />
-            {t("settings.replacements.addNew")}
-          </Button>
-        </div>
+        {activeEditor === null && (
+          <div className="p-3">
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={() => setActiveEditor({ index: null })}
+              disabled={replacementsAreUpdating}
+              className="inline-flex w-full items-center justify-center gap-2 border-dashed border-mid-gray/30 py-3 text-mid-gray transition-all hover:border-mid-gray/60 hover:bg-mid-gray/5 hover:text-white"
+            >
+              <Plus className="h-4 w-4" aria-hidden="true" />
+              {t("settings.replacements.addNew")}
+            </Button>
+          </div>
+        )}
         {activeEditor?.index === null && replacementEditor}
         {replacements.length === 0 && activeEditor === null ? (
           <p className="px-4 py-8 text-center text-sm text-mid-gray">

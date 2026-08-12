@@ -58,7 +58,6 @@ export const ReplacementRow: React.FC<ReplacementRowProps> = ({
     );
   return (
     <div
-      role="listitem"
       className={`group mx-4 mb-2 flex items-start gap-2 rounded-lg border bg-background px-2 py-2 transition-all ${
         replacementIsEnabled
           ? "border-mid-gray/20"

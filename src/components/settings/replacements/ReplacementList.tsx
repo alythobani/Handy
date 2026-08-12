@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { X } from "lucide-react";
+import { Search, X } from "lucide-react";
 import type { Replacement } from "@/bindings";
 import { Button } from "../../ui/Button";
 import { Input } from "../../ui/Input";
@@ -77,8 +77,12 @@ export const ReplacementList: React.FC<ReplacementListProps> = ({
   return (
     <div>
       <div className="relative px-4 py-2">
+        <Search
+          className="pointer-events-none absolute start-6 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-mid-gray"
+          aria-hidden="true"
+        />
         <Input
-          className="w-full pe-9"
+          className="w-full ps-8 pe-9"
           value={filter}
           onChange={(event) => setFilter(event.target.value)}
           placeholder={t("settings.replacements.filter.placeholder")}
@@ -110,7 +114,7 @@ export const ReplacementList: React.FC<ReplacementListProps> = ({
       ) : (
         <div role="list">
           {visibleReplacements.map(({ replacement, index }) => (
-            <React.Fragment key={`${index}-${replacement.search}`}>
+            <div key={`${index}-${replacement.search}`} role="listitem">
               <ReplacementRow
                 replacement={replacement}
                 disabled={disabled}
@@ -152,7 +156,7 @@ export const ReplacementList: React.FC<ReplacementListProps> = ({
                   {editor}
                 </div>
               )}
-            </React.Fragment>
+            </div>
           ))}
         </div>
       )}
