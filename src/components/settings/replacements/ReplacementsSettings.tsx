@@ -136,6 +136,16 @@ export const ReplacementsSettings: React.FC = () => {
     );
     setActiveEditor(null);
   };
+  const replacementEditor = activeEditor !== null && (
+    <ReplacementEditor
+      key={activeEditor.index ?? "new"}
+      initialReplacement={editingReplacement ?? createEmptyReplacement()}
+      isEditing={activeEditor.index !== null}
+      disabled={replacementsAreUpdating}
+      onSave={handleSave}
+      onCancel={() => setActiveEditor(null)}
+    />
+  );
   return (
     <div className="max-w-3xl w-full mx-auto space-y-6">
       <SettingsGroup title={t("settings.replacements.groups.behavior")}>
@@ -167,16 +177,7 @@ export const ReplacementsSettings: React.FC = () => {
             {t("settings.replacements.addNew")}
           </Button>
         </div>
-        {activeEditor !== null && (
-          <ReplacementEditor
-            key={activeEditor.index ?? "new"}
-            initialReplacement={editingReplacement ?? createEmptyReplacement()}
-            isEditing={activeEditor.index !== null}
-            disabled={replacementsAreUpdating}
-            onSave={handleSave}
-            onCancel={() => setActiveEditor(null)}
-          />
-        )}
+        {activeEditor?.index === null && replacementEditor}
         {replacements.length === 0 && activeEditor === null ? (
           <p className="px-4 py-8 text-center text-sm text-mid-gray">
             {t("settings.replacements.emptyState")}
@@ -185,6 +186,8 @@ export const ReplacementsSettings: React.FC = () => {
           <ReplacementList
             replacements={replacements}
             recentlyImportedIndices={recentlyImportedIndices}
+            editingIndex={activeEditor?.index ?? null}
+            editor={activeEditor?.index != null ? replacementEditor : null}
             disabled={replacementsAreUpdating}
             onEdit={(index) => setActiveEditor({ index })}
             onDelete={handleDelete}

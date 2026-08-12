@@ -9,6 +9,8 @@ import { ReplacementRow } from "./ReplacementRow";
 interface ReplacementListProps {
   replacements: Replacement[];
   recentlyImportedIndices: ReadonlySet<number>;
+  editingIndex: number | null;
+  editor: React.ReactNode;
   disabled: boolean;
   onEdit: (index: number) => void;
   onDelete: (index: number) => void;
@@ -24,6 +26,8 @@ function normalizedSearch(replacement: Replacement): string {
 export const ReplacementList: React.FC<ReplacementListProps> = ({
   replacements,
   recentlyImportedIndices,
+  editingIndex,
+  editor,
   disabled,
   onEdit,
   onDelete,
@@ -106,40 +110,49 @@ export const ReplacementList: React.FC<ReplacementListProps> = ({
       ) : (
         <div role="list">
           {visibleReplacements.map(({ replacement, index }) => (
-            <ReplacementRow
-              key={`${index}-${replacement.search}`}
-              replacement={replacement}
-              disabled={disabled}
-              isDuplicate={duplicateSearches.has(normalizedSearch(replacement))}
-              isRecentlyImported={recentlyImportedIndices.has(index)}
-              isDragging={draggingIndex === index}
-              isDropTarget={
-                dropTargetIndex === index && draggingIndex !== index
-              }
-              reorderingDisabled={reorderingDisabled}
-              canMoveUp={index > 0}
-              canMoveDown={index < replacements.length - 1}
-              onEdit={() => onEdit(index)}
-              onDelete={() => onDelete(index)}
-              onToggle={() => onToggle(index)}
-              onDuplicate={() => onDuplicate(index)}
-              onMoveUp={() => onReorder(index, index - 1)}
-              onMoveDown={() => onReorder(index, index + 1)}
-              onDragStart={(event) => {
-                event.dataTransfer.effectAllowed = "move";
-                setDraggingIndex(index);
-              }}
-              onDragEnter={() => {
-                if (!reorderingDisabled) {
-                  setDropTargetIndex(index);
+            <React.Fragment key={`${index}-${replacement.search}`}>
+              <ReplacementRow
+                replacement={replacement}
+                disabled={disabled}
+                isEditing={editingIndex === index}
+                isDuplicate={duplicateSearches.has(
+                  normalizedSearch(replacement),
+                )}
+                isRecentlyImported={recentlyImportedIndices.has(index)}
+                isDragging={draggingIndex === index}
+                isDropTarget={
+                  dropTargetIndex === index && draggingIndex !== index
                 }
-              }}
-              onDragEnd={resetDragState}
-              onDrop={(event) => {
-                event.preventDefault();
-                handleDrop(index);
-              }}
-            />
+                reorderingDisabled={reorderingDisabled}
+                canMoveUp={index > 0}
+                canMoveDown={index < replacements.length - 1}
+                onEdit={() => onEdit(index)}
+                onDelete={() => onDelete(index)}
+                onToggle={() => onToggle(index)}
+                onDuplicate={() => onDuplicate(index)}
+                onMoveUp={() => onReorder(index, index - 1)}
+                onMoveDown={() => onReorder(index, index + 1)}
+                onDragStart={(event) => {
+                  event.dataTransfer.effectAllowed = "move";
+                  setDraggingIndex(index);
+                }}
+                onDragEnter={() => {
+                  if (!reorderingDisabled) {
+                    setDropTargetIndex(index);
+                  }
+                }}
+                onDragEnd={resetDragState}
+                onDrop={(event) => {
+                  event.preventDefault();
+                  handleDrop(index);
+                }}
+              />
+              {editingIndex === index && (
+                <div className="mx-4 mb-3 overflow-hidden rounded-lg border border-logo-primary/30">
+                  {editor}
+                </div>
+              )}
+            </React.Fragment>
           ))}
         </div>
       )}

@@ -17,6 +17,7 @@ import { Button } from "../../ui/Button";
 interface ReplacementRowProps {
   replacement: Replacement;
   disabled: boolean;
+  isEditing: boolean;
   isDuplicate: boolean;
   isRecentlyImported: boolean;
   isDragging: boolean;
@@ -39,6 +40,7 @@ interface ReplacementRowProps {
 export const ReplacementRow: React.FC<ReplacementRowProps> = ({
   replacement,
   disabled,
+  isEditing,
   isDuplicate,
   isRecentlyImported,
   isDragging,
@@ -78,7 +80,11 @@ export const ReplacementRow: React.FC<ReplacementRowProps> = ({
         replacementIsEnabled ? "" : "bg-red-500/5 opacity-60"
       } ${isDuplicate ? "ring-1 ring-inset ring-yellow-500/40" : ""} ${
         isDragging ? "scale-[0.99] opacity-40" : ""
-      } ${isDropTarget ? "bg-logo-primary/10" : ""}`}
+      } ${isDropTarget ? "bg-logo-primary/10" : ""} ${
+        isEditing
+          ? "bg-logo-primary/5 ring-1 ring-inset ring-logo-primary/30"
+          : ""
+      }`}
       onDragEnter={onDragEnter}
       onDragOver={(event) => event.preventDefault()}
       onDrop={onDrop}
