@@ -1,7 +1,8 @@
 # Handy Replacements v0.9.8 integration
 
 Date: 2026-10-17
-Branch: `update/handy-v0.9.8`
+Integration branch: `update/handy-v0.9.8`
+Maintained custom branch: `handy-replacements`
 
 ## Outcome
 
@@ -34,7 +35,7 @@ The integration uses a separate Git worktree at `forks/Handy-worktrees/v0.9.8`. 
 - [x] Bun/Nix generated dependency metadata matches the lockfile.
 - [x] Clippy passed with all warnings denied except four inherited upstream categories listed below.
 - [x] macOS release app bundle built and its ad-hoc signature verified with `codesign --verify --deep --strict`.
-- [ ] User runtime QA: microphone, shortcuts, existing settings and rules, replacement output, history, and paste.
+- [x] User reported that the new build is working great after runtime testing. Automated validation does not independently verify every interactive behavior.
 
 ## Known validation limits
 
@@ -61,4 +62,6 @@ A pre-QA snapshot of the current settings, a consistent SQLite history database 
 
 Quit the old Handy Replacements process before opening the new app bundle, since both use the same app identity and single-instance behavior. Keep the old bundle available for rollback until QA is complete.
 
-The fork's current remote `main` contains 23 commits after the stable v0.9.8 release. Publishing a stable custom build as `main` therefore requires a separate decision: back up and replace that branch with an explicit expected-SHA lease, or publish the custom build under another branch and change the default. No remote branches are changed by this integration.
+The approved branch policy keeps `main` as a mirror of official upstream development, with no custom commits. The maintained custom build lives on `handy-replacements`, which is the intended default branch of `alythobani/Handy`. The upstream mirror remains 23 commits beyond the v0.9.8 stable release used by this build.
+
+For future updates, create a temporary update branch from `handy-replacements`, merge a stable upstream release tag, validate and build, perform runtime QA, then advance `handy-replacements`. Sync `main` explicitly and separately. This avoids replacing the fork's existing `main` history.
