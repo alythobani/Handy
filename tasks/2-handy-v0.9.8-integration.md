@@ -54,7 +54,9 @@ No Nix build or Windows/Linux build was performed. Vite retains its existing lar
 
 The arm64 app bundle is at `src-tauri/target/release/bundle/macos/Handy Replacements.app` in this integration worktree. Its version is `0.9.8`, its identifier is `com.anatta.handy-replacements`, and its signature is ad hoc. The bundle includes the tray resources and Silero VAD model. Its linked libraries are macOS system libraries and frameworks.
 
-The working app's executable and Info.plist were hashed before and after the release build and remain unchanged.
+The working app's executable and Info.plist were hashed before and after the release build and remained unchanged. After successful user QA, the old v0.9.5 generated Rust build directory and frontend output were removed. Its source remains on `feat/create-handy-replacements-app`, locally and on the fork.
+
+The tested v0.9.8 app was subsequently copied to `/Users/alythobani/Applications/Handy Replacements.app`. The installed copy's executable and Info.plist match the tested bundle, its code signature verifies, and its running process was confirmed at the installed path. Source checkouts were not moved during installation.
 
 A pre-QA snapshot of the current settings, a consistent SQLite history database backup, and recordings is saved at `/Users/alythobani/dev/open-source/.backups/Handy/20261017T141249Z/app-data-before-v0.9.8`.
 
@@ -62,6 +64,6 @@ A pre-QA snapshot of the current settings, a consistent SQLite history database 
 
 Quit the old Handy Replacements process before opening the new app bundle, since both use the same app identity and single-instance behavior. Keep the old bundle available for rollback until QA is complete.
 
-The approved branch policy keeps `main` as a mirror of official upstream development, with no custom commits. The maintained custom build lives on `handy-replacements`, which is the intended default branch of `alythobani/Handy`. The upstream mirror remains 23 commits beyond the v0.9.8 stable release used by this build.
+The approved branch policy keeps `main` as a mirror of official upstream development, with no custom commits. The maintained custom build lives on `handy-replacements`, while `main` remains the default branch of `alythobani/Handy`. The upstream mirror remains 23 commits beyond the v0.9.8 stable release used by this build.
 
 For future updates, create a temporary update branch from `handy-replacements`, merge a stable upstream release tag, validate and build, perform runtime QA, then advance `handy-replacements`. Sync `main` explicitly and separately. This avoids replacing the fork's existing `main` history.
