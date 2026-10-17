@@ -4,11 +4,15 @@ import { listen } from "@tauri-apps/api/event";
 import type {
   AppSettings as Settings,
   AudioDevice,
+  ChineseScript,
   TranscribeAcceleratorSetting,
   OrtAcceleratorSetting,
   Replacement,
+  ShortcutActivation,
+  VadBackend,
 } from "@/bindings";
 import { commands } from "@/bindings";
+import { toast } from "sonner";
 
 interface SettingsStore {
   settings: Settings | null;
@@ -91,7 +95,10 @@ const settingUpdaters: {
     commands.changeShowWhatsNewOnUpdateSetting(value as boolean),
   whats_new_last_seen_version: (value) =>
     commands.changeWhatsNewLastSeenVersionSetting(value as string),
-  push_to_talk: (value) => commands.changePttSetting(value as boolean),
+  shortcut_activation: (value) =>
+    commands.changeShortcutActivationSetting(value as ShortcutActivation),
+  hold_threshold_ms: (value) =>
+    commands.changeHoldThresholdMsSetting(value as number),
   selected_microphone: (value) =>
     commands.setSelectedMicrophone(
       (value as string) === "Default" || value === null
@@ -164,8 +171,19 @@ const settingUpdaters: {
     commands.changeLazyStreamCloseSetting(value as boolean),
   overlay_style: (value) => commands.changeOverlayStyleSetting(value as string),
   vad_enabled: (value) => commands.changeVadEnabledSetting(value as boolean),
+  vad_backend: async (value) => {
+    const result = await commands.changeVadBackendSetting(value as VadBackend);
+    if (result.status === "error") {
+      // Rejected switches (e.g. mid-recording) roll the dropdown back via the
+      // throw below; the toast tells the user why.
+      toast.error(result.error);
+      throw new Error(result.error);
+    }
+  },
   filler_word_removal_enabled: (value) =>
     commands.changeFillerWordRemovalEnabledSetting(value as boolean),
+  chinese_script: (value) =>
+    commands.changeChineseScriptSetting(value as ChineseScript),
   show_tray_icon: (value) =>
     commands.changeShowTrayIconSetting(value as boolean),
   transcribe_accelerator: (value) =>
@@ -175,7 +193,7 @@ const settingUpdaters: {
   ort_accelerator: (value) =>
     commands.changeOrtAcceleratorSetting(value as OrtAcceleratorSetting),
   transcribe_gpu_device: (value) =>
-    commands.changeTranscribeGpuDevice(value as number),
+    commands.changeTranscribeGpuDevice(value as string | null),
   extra_recording_buffer_ms: (value) =>
     commands.changeExtraRecordingBufferSetting(value as number),
 };
@@ -613,6 +631,12 @@ export const useSettingsStore = create<SettingsStore>()(
       // reset during model switch). The backend is the source of truth.
       listen("model-state-changed", () => {
         get().refreshSettings();
+      });
+      listen<{ setting?: string }>("settings-changed", (event) => {
+        get().refreshSettings();
+        if (event.payload.setting === "selected_microphone") {
+          get().refreshAudioDevices();
+        }
       });
     },
   })),

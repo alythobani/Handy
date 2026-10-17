@@ -12,7 +12,7 @@ This is a selective port, not a branch merge. Current Handy is hundreds of commi
 
 - Preserve PR #455's feature set and ordering semantics unless an intentional correction is listed below.
 - Keep the implementation split into focused, testable units instead of copying the PR's replacement engine into `TranscriptionManager` or its 959-line UI component intact.
-- Apply replacements after Handy's custom-word/filler cleanup and normalization, but before Chinese conversion, optional LLM post-processing, history output, and paste.
+- Apply replacements after Chinese script conversion, custom-word/filler cleanup, and normalization, but before optional LLM post-processing, history output, and paste. This follows v0.9.8's conversion-before-custom-words ordering.
 - Process enabled rules in stored order; each rule receives the preceding rule's output.
 - Preserve `[run]` and its unescaped shell placeholders. Execute commands only after all ordinary replacement rules finish.
 - Keep JSON import validation intentionally shallow and allow imported duplicates.
@@ -75,7 +75,7 @@ This is a selective port, not a branch merge. Current Handy is hundreds of commi
 
 ## Notes
 
-- Local PR reference: `origin/pr/455`
+- Local PR reference: `upstream/pr/455`
 - Current Handy already depends on `regex` and `chrono`; the port should not need new Rust dependencies for the original feature set.
 - Current `post_process_transcription_text` is the shared batch/streaming integration seam.
 - The optional LLM call happens later in `process_transcription_output`.

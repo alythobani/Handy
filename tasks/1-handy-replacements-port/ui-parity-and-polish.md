@@ -34,11 +34,11 @@ Bring Handy Replacements' UI up to the visual and interaction quality demonstrat
 
 ## Workflow
 
-1. Polish the add/edit form and collapsible advanced controls.
-2. Polish rule rows, inline editing, indicators, and actions.
-3. Polish filtering, ordering feedback, import/export, and empty states.
-4. Compare the running app with the PR recordings and fix remaining visual discrepancies.
-5. Run frontend validation and commit each coherent slice separately.
+- [x] Polish the add/edit form and collapsible advanced controls.
+- [x] Polish rule rows, inline editing, indicators, and actions.
+- [x] Polish filtering, ordering feedback, import/export, and empty states.
+- [x] Run frontend validation and commit each coherent slice separately.
+- [ ] Compare the running app with the PR recordings and fix remaining visual discrepancies.
 
 ## Done When
 
